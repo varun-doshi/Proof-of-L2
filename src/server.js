@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3002;
 const { Exec } = require("./exec.js");
+const { ethers } = require("ethers");
 // const cors = require("cors");
 // const bodyParser = require("body-parser");
 // app.use(
@@ -16,7 +17,7 @@ const { Exec } = require("./exec.js");
 app.post("/api", async (req, res) => {
   // console.log(req.query, typeof req.query.blockNum)
   const blockNum = parseInt(req.query.blockNum);
-  // console.log(blockNum, typeof blockNum)
+  console.log(blockNum, typeof blockNum);
 
   let temp = null;
   try {
@@ -27,8 +28,13 @@ app.post("/api", async (req, res) => {
     console.log("the error:", error);
   }
 
-  console.log("The log:", temp);
-  res.send(temp);
+  let action_type = parseInt(temp.toString().substring(0, 8));
+  let data = temp.toString().substring(8);
+  console.log("the log:", action_type);
+  let r = "0x" + data;
+  let parse_data = parseInt(Number(r)).toString();
+
+  res.send(parse_data.toString());
 });
 
 // app.post("/mintNFT", async (req, res) => {

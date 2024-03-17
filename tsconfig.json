@@ -2,6 +2,7 @@
   "extends": "./node_modules/assemblyscript/std/assembly.json",
 
   "include": ["./**/*.ts"],
+  "exclude": [],
   // "ts-node": {
   //   "files": true
   // },
@@ -14,5 +15,4 @@
     "allowJs": true,
     "outDir": "src"
   }
-  // "files": ["src/exec.ts"]
 }

@@ -7,9 +7,10 @@ dataSources:
   - kind: ethereum
     network: mainnet
     event:
-      - address: "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      - address: "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
         events:
-          - "NewHeaderBlock(address,uint256,uint256,uint256,uint256,bytes32)"
+          - "Withdraw(address,address,address,uint256)"
+          - "Deposit(address,address,address,uint256,uint16)"
 
 mapping:
   language: wasm/assemblyscript

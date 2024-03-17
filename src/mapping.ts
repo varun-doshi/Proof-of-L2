@@ -1,24 +1,37 @@
 //@ts-ignore
 import { BigInt, require } from "@ora-io/cle-lib";
-import { Bytes, Block, Event } from "@ora-io/cle-lib";
+import { Bytes, Block, Event, console } from "@ora-io/cle-lib";
 
-let addr = Bytes.fromHexString("0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287");
-let esig_commit = Bytes.fromHexString(
-  "0xba5de06d22af2685c6c7765f60067f7d2b08c2d29f53cdf14d67f6d1c9bfb527"
+let addr = Bytes.fromHexString("0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9");
+let esig_deposit = Bytes.fromHexString(
+  "0xde6857219544bb5b7746f48ed30be6386fefc61b2f864cacf559893bf50fd951"
+);
+let esig_withdraw = Bytes.fromHexString(
+  "0x3115d1449a7b732c986cba18244e897a450f61e1bb8d589cd2e69e6c8924f9f7"
 );
 
 export function handleBlocks(blocks: Block[]): Bytes {
-  // #1 can access all (matched) events of the latest block
-  let events: Event[] = blocks[0].account(addr).eventsByEsig(esig_commit);
+  // init output state
+  let state: Bytes = Bytes.empty();
+  let deposit_signal = Bytes.fromI32(0);
+  let withdraw_signal = Bytes.fromI32(1);
 
-  require(events.length > 0);
+  let events = blocks[0].events;
+  // console.log(events.length.toString());
 
-  // set state to the address of the 1st (matched) event, demo purpose only.
-  let proposer = events[0].topic1;
-  let headBlock = BigInt.fromBytes(events[0].topic2).toString();
+  if (events[0].esig == esig_deposit) {
+    // if (blocks[0].account(addr).eventsByEsig(esig_deposit).length > 0) {
+    let event_data = events[0].data.slice(32);
 
-  return Bytes.fromHexString(headBlock);
+    state = Bytes.fromByteArray(deposit_signal.concat(event_data));
+  } else if (events[0].esig == esig_withdraw) {
+    let event_data = events[0].data;
+
+    state = Bytes.fromByteArray(withdraw_signal.concat(event_data));
+  }
+
+  return state;
 }
 
-//000000000000000000000000000000000000000000000000000000002307e540
-// 22 24 25 26 27 28 29 30 31
+//00000001000000000000000000000000000000000000000000000000000000000ba4fa85
+//000000000000000000000000000000000000000000000000000000000ba4fa85
