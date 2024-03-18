@@ -7,7 +7,7 @@ let esig_deposit = Bytes.fromHexString(
   "0xde6857219544bb5b7746f48ed30be6386fefc61b2f864cacf559893bf50fd951"
 );
 let esig_withdraw = Bytes.fromHexString(
-  "0x3115d1449a7b732c986cba18244e897a450f61e1bb8d589cd2e69e6c8924f9f7"
+  "0xc6a898309e823ee50bac64e45ca8adba6690e99e7841c45d754e2a38e9019d9b"
 );
 
 export function handleBlocks(blocks: Block[]): Bytes {
@@ -16,18 +16,24 @@ export function handleBlocks(blocks: Block[]): Bytes {
   let deposit_signal = Bytes.fromI32(0);
   let withdraw_signal = Bytes.fromI32(1);
 
-  let events = blocks[0].events;
+  let events = blocks[0].accountByBytes(addr).eventsByEsig(esig_withdraw);
   // console.log(events.length.toString());
 
-  if (events[0].esig == esig_deposit) {
-    // if (blocks[0].account(addr).eventsByEsig(esig_deposit).length > 0) {
-    let event_data = events[0].data.slice(32);
+  // if (events[0].esig == esig_deposit) {
+  //   // if (blocks[0].account(addr).eventsByEsig(esig_deposit).length > 0) {
+  //   let event_data = events[0].data.slice(32);
 
-    state = Bytes.fromByteArray(deposit_signal.concat(event_data));
-  } else if (events[0].esig == esig_withdraw) {
-    let event_data = events[0].data;
+  //   state = Bytes.fromByteArray(deposit_signal.concat(event_data));
+  // } else if (events[0].esig == esig_withdraw) {
+  //   let event_data = events[0].data;
 
-    state = Bytes.fromByteArray(withdraw_signal.concat(event_data));
+  //   state = Bytes.fromByteArray(withdraw_signal.concat(event_data));
+  // }
+  if (events.length > 0) {
+    let reserve = events[0].topic1;
+    let data = events[0].data.slice(0, 64);
+
+    state = Bytes.fromByteArray(reserve.concat(data));
   }
 
   return state;

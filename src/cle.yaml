@@ -9,8 +9,7 @@ dataSources:
     event:
       - address: "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
         events:
-          - "Withdraw(address,address,address,uint256)"
-          - "Deposit(address,address,address,uint256,uint16)"
+          - "Borrow(address,address,address,uint256,uint256,uint256,uint16)"
 
 mapping:
   language: wasm/assemblyscript
