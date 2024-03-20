@@ -11,6 +11,8 @@ node_modules/
 
 dist
 
+.env
+
 # CLE compile folder
 build
 *.wasm

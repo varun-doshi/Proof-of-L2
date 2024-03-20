@@ -9,7 +9,7 @@ dataSources:
     event:
       - address: "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9"
         events:
-          - "Borrow(address,address,address,uint256,uint256,uint256,uint16)"
+          - "Repay(address,address,address,uint256)"
 
 mapping:
   language: wasm/assemblyscript

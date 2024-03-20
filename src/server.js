@@ -26,7 +26,7 @@ app.post("/api", async (req, res) => {
   //19445162
   //19445193
   try {
-    for (let i = blockNum; i <= 19445192; i++) {
+    for (let i = blockNum; i <= 19445193; i++) {
       console.log("running block", i);
       try {
         await Exec(i).then((ret) => {
@@ -53,6 +53,44 @@ app.post("/api", async (req, res) => {
   }
 
   res.status(200).send(borrowed.toString());
+});
+
+app.post("/repay", async (req, res) => {
+  const blockNum = parseInt(req.query.blockNum);
+  console.log(blockNum, typeof blockNum);
+  let borrowed = 0;
+  let temp = null;
+  //19445162
+  //19445193
+  try {
+    // for (let i = blockNum; i <= 19445193; i++) {
+    console.log("running block", blockNum);
+    // try {
+    await Exec(blockNum).then((ret) => {
+      temp = ret;
+    });
+    // } catch (error) {
+    // continue;
+    // }
+    // let data = temp.substring(24);
+    // let reserve = data.toString().substring(0, 40);
+    // let data2 = data.substring(40);
+    // let user = data2.toString().substring(0, 40);
+    // let amount = data2.substring(64);
+    // let parse_data = BigInt("0x" + amount);
+    console.log(temp);
+    // let final_value = await getTokenPrice(reserve, parse_data);
+
+    // borrowed = borrowed + final_value;
+    // console.log("the log:", borrowed);
+    // }
+    console.log("Process completed successfully");
+  } catch (error) {
+    console.log("the error:", error);
+  }
+
+  // res.status(200).send(borrowed.toString());
+  res.status(200).send(temp);
 });
 
 app.listen(port, async () => {
