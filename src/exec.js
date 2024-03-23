@@ -146,7 +146,8 @@ var networkConfig = {
 var config = {
   JsonRpcProviderUrl: {
     // Erigon node rpc are highly recommended here.
-    mainnet: "https://eth.llamarpc.com",
+    mainnet:
+      "https://eth-mainnet.g.alchemy.com/v2/7dPsv4k9QI6KAuCyfQSF3tzdY7coYthq",
     sepolia: "https://eth-sepolia.public.blastapi.io",
   },
   UserPrivateKey: "0x{key}",

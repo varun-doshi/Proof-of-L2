@@ -15,13 +15,13 @@ const getTokenPrice = async (address1, amount) => {
     address: address1,
     chain,
   });
-  console.log(response);
+  // console.log(response);
   const priceInEth = response.toJSON().nativePrice.value;
   const decimals = response.toJSON().tokenDecimals;
   const value = parseFloat(
     parseFloat(ethers.utils.formatUnits(amount, decimals)).toFixed(2)
   );
-  console.log(value);
+  // console.log(value);
   // const valueBn = new BigNumber(value);
   // const amountBn = new BigNumber(amount);
   // const final_amount = valueBn * amountBn;
@@ -32,4 +32,4 @@ const getTokenPrice = async (address1, amount) => {
 module.exports = getTokenPrice;
 // getTokenPrice();
 
-800000000;
+// 800000000;

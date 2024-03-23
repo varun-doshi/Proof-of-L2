@@ -20,18 +20,7 @@ export function handleBlocks(blocks: Block[]): Bytes {
   let withdraw_signal = Bytes.fromI32(1);
 
   let events = blocks[0].accountByBytes(addr).eventsByEsig(esig_repay);
-  // console.log(events.length.toString());
 
-  // if (events[0].esig == esig_deposit) {
-  //   // if (blocks[0].account(addr).eventsByEsig(esig_deposit).length > 0) {
-  //   let event_data = events[0].data.slice(32);
-
-  //   state = Bytes.fromByteArray(deposit_signal.concat(event_data));
-  // } else if (events[0].esig == esig_withdraw) {
-  //   let event_data = events[0].data;
-
-  //   state = Bytes.fromByteArray(withdraw_signal.concat(event_data));
-  // }
   if (events.length > 0) {
     let reserve = events[0].topic1;
     let user = events[0].topic2;
