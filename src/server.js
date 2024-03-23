@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3002;
+const port = 3003;
 const { Exec } = require("./exec.js");
 const { generateProof } = require("./prove.js");
 const { ethers } = require("ethers");
@@ -18,43 +18,43 @@ const cle = require("@ora-io/cle-api");
 
 // const { mintNFT } = require("./mintNFT");
 
-app.post("/api", async (req, res) => {
-  // console.log(req.query, typeof req.query.blockNum)
-  const blockNum = parseInt(req.query.blockNum);
-  console.log(blockNum, typeof blockNum);
-  let repayed = 0;
-  let temp = null;
-  //19445162
-  //19445193
-  try {
-    for (let i = blockNum; i <= 19445193; i++) {
-      console.log("running block", i);
-      try {
-        await Exec(i).then((ret) => {
-          temp = ret;
-        });
-      } catch (error) {
-        continue;
-      }
-      let data = temp.substring(24);
-      let reserve = data.toString().substring(0, 40);
-      let data2 = data.substring(40);
-      let user = data2.toString().substring(0, 40);
-      let amount = data2.substring(64);
-      let parse_data = BigInt("0x" + amount);
-      console.log(parse_data);
-      let final_value = await getTokenPrice(reserve, parse_data);
+// app.post("/api", async (req, res) => {
+//   // console.log(req.query, typeof req.query.blockNum)
+//   const blockNum = parseInt(req.query.blockNum);
+//   console.log(blockNum, typeof blockNum);
+//   let repayed = 0;
+//   let temp = null;
+//   //19445162
+//   //19445193
+//   try {
+//     for (let i = blockNum; i <= 19484975; i++) {
+//       console.log("running block", i);
+//       try {
+//         await Exec(i).then((ret) => {
+//           temp = ret;
+//         });
+//       } catch (error) {
+//         continue;
+//       }
+//       let data = temp.substring(24);
+//       let reserve = data.toString().substring(0, 40);
+//       let data2 = data.substring(40);
+//       let user = data2.toString().substring(0, 40);
+//       let amount = data2.substring(64);
+//       let parse_data = BigInt("0x" + amount);
+//       console.log(parse_data);
+//       let final_value = await getTokenPrice(reserve, parse_data);
 
-      repayed = repayed + final_value;
-      console.log("the log:", repayed);
-    }
-    console.log("Process completed successfully");
-  } catch (error) {
-    console.log("the error:", error);
-  }
+//       repayed = repayed + final_value;
+//       console.log("the log:", repayed);
+//     }
+//     console.log("Process completed successfully");
+//   } catch (error) {
+//     console.log("the error:", error);
+//   }
 
-  res.status(200).send(repayed.toString());
-});
+//   res.status(200).send(repayed.toString());
+// });
 
 app.post("/final", async (req, res) => {
   //call 2 apis from here:
@@ -74,6 +74,7 @@ app.post("/repay", async (req, res) => {
       console.log("running block", i);
       try {
         await Exec(i).then((ret) => {
+          console.log("ran");
           temp = ret;
         });
       } catch (error) {

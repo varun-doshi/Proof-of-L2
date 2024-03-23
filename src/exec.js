@@ -153,8 +153,8 @@ var config = {
   UserPrivateKey: "0x{key}",
 };
 var execOptionsForEvent = {
-  wasmPath: __dirname + "/cle.wasm",
-  yamlPath: __dirname + "/cle.yaml",
+  wasmPath: __dirname + "/repay-cle.wasm",
+  yamlPath: __dirname + "/repay-cle.yaml",
   //   local: false,
 };
 function loadConfigByNetwork(yaml, networksConfig, isDataSource) {
@@ -203,7 +203,7 @@ function loadConfigByNetwork(yaml, networksConfig, isDataSource) {
   }
   return targetConfig;
 }
-async function Exec(execBlockid) {
+async function RepayExec(execBlockid) {
   return __awaiter(this, void 0, void 0, function () {
     var wasmPath,
       yamlPath,
@@ -257,4 +257,4 @@ async function Exec(execBlockid) {
     });
   });
 }
-exports.Exec = Exec;
+exports.Exec = RepayExec;
